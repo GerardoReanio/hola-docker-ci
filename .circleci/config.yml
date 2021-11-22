@@ -1,0 +1,14 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            -"fingerprint"
+      - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker build -t gerardoreanio/docker-ci:$CIRCLE_SHA1 .
+      - run: docker push gerardoreanio/docker-ci:$CIRCLE_SHA1
+      - run: ssh -o StrictHostKeyChecking=no root@ipdigitaloceam "/bin/bash /root/docker/deploy.sh $CIRCLE_SHA1"
+
