@@ -5,10 +5,10 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            -"fingerprint"
+            -"99:bc:d2:b6:ec:03:b5:f4:5d:14:1d:d4:6c:c5:11:ba"
       - checkout
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build -t gerardoreanio/docker-ci:$CIRCLE_SHA1 .
       - run: docker push gerardoreanio/docker-ci:$CIRCLE_SHA1
-      - run: ssh -o StrictHostKeyChecking=no root@ipdigitaloceam "/bin/bash /root/docker/deploy.sh $CIRCLE_SHA1"
+      - run: ssh -o StrictHostKeyChecking=no root@165.227.110.158 "/bin/bash /root/docker/deploy.sh $CIRCLE_SHA1"
 
